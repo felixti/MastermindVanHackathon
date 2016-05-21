@@ -37,6 +37,8 @@ namespace MastermindVanHackathon.Models
         public string Guess { get; protected set; }
         public string Code { get; protected set; }
         public IList<Player> Players { get; private set; }
+        public DateTime CreatedAt { get; private set; }
+        public DateTime UpdatedAt { get; private set; }
         public bool IsSolved()
         {
             return Solved;
@@ -68,6 +70,7 @@ namespace MastermindVanHackathon.Models
         public void SetupNewGame()
         {
             this.Gamekey = TokenGenerator.GenerateToken();
+            this.CreatedAt = DateTime.Now;
         }
 
         public dynamic Result { get; private set; }
@@ -75,6 +78,7 @@ namespace MastermindVanHackathon.Models
         public void SetGuess(string guess)
         {
             this.Guess = guess;
+            this.UpdatedAt = DateTime.Now;
         }
 
         public void SetResult()

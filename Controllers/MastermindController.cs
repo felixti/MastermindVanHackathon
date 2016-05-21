@@ -75,6 +75,7 @@ namespace MastermindVanHackathon.Controllers
                     currentGame.PastResults,
                     Result = "You win!",
                     currentGame.Solved,
+                    TimeTaken = currentGame.UpdatedAt.Subtract(currentGame.CreatedAt).Seconds,
                     currentGame.Players.First().User
                 };
 

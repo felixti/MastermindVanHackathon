@@ -9,5 +9,6 @@ namespace MastermindVanHackathon.CrossCutting
     public interface IMastermindMatch
     {
         IDictionary<string, int> MatchGuessWithCode(string code, string guess);
+
     }
 }

@@ -22,7 +22,7 @@ namespace MastermindVanHackathon.CrossCutting
                     qttExactFounded++;
 
 
-            result.Add("exact", qttExactFounded);
+            return result.Add("exact", qttExactFounded);
         }
     }
 }

@@ -24,6 +24,7 @@ namespace MastermindVanHackathon.CrossCutting
                 result.Add(colors[_random.Next(colors.Length)]);
             }
 
+
             return result.ToString();
         }
     }

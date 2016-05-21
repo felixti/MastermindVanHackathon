@@ -24,14 +24,16 @@ namespace MastermindVanHackathon
 
             var config = new HttpConfiguration();
 
-            //config.MapHttpAttributeRoutes();
+            config.MapHttpAttributeRoutes();
+            config.EnsureInitialized();
             config.Routes.MapHttpRoute(
-                name: "DefaultHttpRoute",
-                routeTemplate: "api/{controller}"
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
                 );
 
             app.UseStaticFiles(staticFileOptions);
-            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);      
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseWebApi(config);
             ConfigureOAuth(app);
 
@@ -42,7 +44,7 @@ namespace MastermindVanHackathon
             OAuthAuthorizationServerOptions oAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
                 AllowInsecureHttp = true,
-                TokenEndpointPath = new Microsoft.Owin.PathString("/api/security/token"),
+                TokenEndpointPath = new Microsoft.Owin.PathString("/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(30),
                 Provider = new AuthAuthorizationServerProvider()
             };

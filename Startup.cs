@@ -1,14 +1,17 @@
-﻿using Microsoft.Owin.Builder;
+﻿using MastermindVanHackathon.Controllers;
+using MastermindVanHackathon.CrossCutting;
+using MastermindVanHackathon.Data;
+using MastermindVanHackathon.Models;
 using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.Owin.StaticFiles;
 using Microsoft.Owin.StaticFiles.Infrastructure;
+using Newtonsoft.Json.Serialization;
 using Owin;
+using SimpleInjector;
+using SimpleInjector.Extensions.ExecutionContextScoping;
+using SimpleInjector.Integration.WebApi;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace MastermindVanHackathon
@@ -17,40 +20,82 @@ namespace MastermindVanHackathon
     {
         public void Configuration(IAppBuilder app)
         {
-            SharedOptions sharedOptions = new SharedOptions();
-            sharedOptions.FileSystem = new PhysicalFileSystem(new RootPathProvider().GetRootPath());
-            StaticFileOptions staticFileOptions = new StaticFileOptions(sharedOptions);
-
-
-            var config = new HttpConfiguration();
-
-            config.MapHttpAttributeRoutes();
-            config.EnsureInitialized();
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-                );
-
-            app.UseStaticFiles(staticFileOptions);
+            
+            ConfigureStaticFiles(app);
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
-            app.UseWebApi(config);
-            ConfigureOAuth(app);
+            var config = new HttpConfiguration();
+            ConfigureRegisters(app, config);
+            ConfigureWebApi(app, config);
 
+            //ConfigureOAuth(app);
         }
 
-        public void ConfigureOAuth(IAppBuilder app)
+        private void ConfigureOAuth(IAppBuilder app)
         {
             OAuthAuthorizationServerOptions oAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new Microsoft.Owin.PathString("/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(30),
+                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(5),
                 Provider = new AuthAuthorizationServerProvider()
             };
 
             app.UseOAuthAuthorizationServer(oAuthServerOptions);
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+        }
+
+        private void ConfigureWebApi(IAppBuilder app, HttpConfiguration config)
+        {
+            
+
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            config.MapHttpAttributeRoutes();
+            config.EnsureInitialized();
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{action}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+                );
+
+
+
+            app.UseWebApi(config);
+        }
+
+        private void ConfigureStaticFiles(IAppBuilder app)
+        {
+            SharedOptions sharedOptions = new SharedOptions();
+            sharedOptions.FileSystem = new PhysicalFileSystem(new RootPathProvider().GetRootPath());
+            StaticFileOptions staticFileOptions = new StaticFileOptions(sharedOptions);
+
+            app.UseStaticFiles(staticFileOptions);
+        }
+
+        private void ConfigureRegisters(IAppBuilder app, HttpConfiguration config)
+        {
+            var container = new Container();
+            container.Options.DefaultScopedLifestyle = new ExecutionContextScopeLifestyle();
+
+            container.Register<IMastermindMatch, MastermindMatch>(Lifestyle.Scoped);
+            container.Register<MongoConnection>(Lifestyle.Scoped);
+            container.RegisterWebApiRequest<IMastermindRepository, MastermindRepository>();
+            container.RegisterWebApiRequest<Game>();
+            container.RegisterWebApiControllers(config);
+
+            container.Verify();
+
+            config.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
+
+            app.Use(async (context, next) =>
+            {
+                using (container.BeginExecutionContextScope())
+                {
+                    await next();
+                }
+            });
         }
     }
 }

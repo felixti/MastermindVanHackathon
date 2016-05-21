@@ -17,15 +17,14 @@ namespace MastermindVanHackathon.CrossCutting
         public static string RandomGuess(string[] colors)
         {
 
-            List<string> result = new List<string>();
+            List<char> result = new List<char>();
 
             for (int i = 0; i < colors.Length; i++)
             {
-                result.Add(colors[_random.Next(colors.Length)]);
+                result.Add(Convert.ToChar(colors[_random.Next(colors.Length)]));
             }
 
-
-            return result.ToString();
+            return new string(result.ToArray());
         }
     }
 }

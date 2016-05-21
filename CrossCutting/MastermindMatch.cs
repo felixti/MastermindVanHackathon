@@ -21,8 +21,11 @@ namespace MastermindVanHackathon.CrossCutting
                 if (charsCode[i] == charsGuess[i])
                     qttExactFounded++;
 
+            result.Add("exact", qttExactFounded);
+            result.Add("near", qttFounded);
+            result.Add("match", qttExactFounded == code.Length ? 1 : 0);
 
-            return result.Add("exact", qttExactFounded);
+            return result;
         }
     }
 }

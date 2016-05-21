@@ -104,7 +104,12 @@
   <ItemGroup>
     <Compile Include="AuthAuthorizationServerProvider.cs" />
     <Compile Include="Controllers\MastermindController.cs" />
-    <Compile Include="Models\MastermindSetup.cs" />
+    <Compile Include="CrossCutting\IMastermindMatch.cs" />
+    <Compile Include="CrossCutting\MastermindMatch.cs" />
+    <Compile Include="CrossCutting\MastermindRandomize.cs" />
+    <Compile Include="Models\Game.cs" />
+    <Compile Include="Models\GuessPlay.cs" />
+    <Compile Include="Models\PastResult.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RootPathProvider.cs" />

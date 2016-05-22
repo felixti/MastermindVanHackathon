@@ -131,6 +131,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppServices\IMastermindAppService.cs" />
+    <Compile Include="AppServices\MastermindAppService.cs" />
     <Compile Include="AuthAuthorizationServerProvider.cs" />
     <Compile Include="Configuration\ObjectIdConverter.cs" />
     <Compile Include="Configuration\PascalCaseToUnderscoreContractResolver.cs" />

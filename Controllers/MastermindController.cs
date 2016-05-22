@@ -1,4 +1,5 @@
-﻿using MastermindVanHackathon.Configuration;
+﻿using MastermindVanHackathon.AppServices;
+using MastermindVanHackathon.Configuration;
 using MastermindVanHackathon.Data;
 using MastermindVanHackathon.Models;
 using Newtonsoft.Json;
@@ -15,39 +16,28 @@ namespace MastermindVanHackathon.Controllers
 {
     public class MastermindController : ApiController
     {
-        private readonly Game _game;
-        private readonly IMastermindRepository _mastermindRepository;
-        public MastermindController(IMastermindRepository mastermindRepository, Game game)
+        private readonly IMastermindAppService _mastermindAppService;
+        public MastermindController(IMastermindAppService mastermindAppService)
         {
-            _game = game;
-            _mastermindRepository = mastermindRepository;
-            SetupDatabase();
+            _mastermindAppService = mastermindAppService;
         }
 
-        private void SetupDatabase()
-        {
-            if (!_mastermindRepository.HasCollection())
-            {
-                _mastermindRepository.CreateCollection();
-            }
-        }
-        //public HttpResponseMessage NewGame([FromBody] string user)
-        //{
-        //    //To Do
-        //}
         public async Task<HttpResponseMessage> NewGame([FromBody]Player player)
         {
-            _game.SetupNewGame();
-            _game.AddPlayer(player);
-            _game.GenerateCode();
+            var newGame = _mastermindAppService.StartGame(player);
 
-            _mastermindRepository.Insert(_game);
-
-            var values = new { _game.Colors, _game.CodeLength, _game.Gamekey, _game.NumGuesses, _game.PastResults, _game.Solved };
+            var values = new
+            {
+                newGame.Colors,
+                newGame.CodeLength,
+                newGame.Gamekey,
+                newGame.NumGuesses,
+                newGame.PastResults,
+                newGame.Solved
+            };
 
             return await Task<HttpResponseMessage>.Factory.StartNew(() =>
             {
-
                 return Request.CreateResponse(HttpStatusCode.OK, values);
             });
         }
@@ -56,58 +46,51 @@ namespace MastermindVanHackathon.Controllers
         {
             HttpResponseMessage response = null;
 
-            var currentGame = _mastermindRepository.GetGamebyGamekey(guess.GameKey);
-
-            currentGame.SetTry();
-            currentGame.SetGuess(guess.Code);
-            currentGame.MatchCode();
-            currentGame.SetResult();
-
-            _mastermindRepository.Replace(currentGame);
-
-
-
-            if (currentGame.IsSolved())
-            {
-                var ret = new
-                {
-                    currentGame.CodeLength,
-                    FurtherInstructions = "Solve the challenge to see this!",
-                    currentGame.Colors,
-                    currentGame.Gamekey,
-                    currentGame.Guess,
-                    currentGame.NumGuesses,
-                    currentGame.PastResults,
-                    Result = "You win!",
-                    currentGame.Solved,
-                    TimeTaken = currentGame.UpdatedAt.Subtract(currentGame.CreatedAt).Seconds,
-                    currentGame.Players.First().User
-                };
-
-                response = Request.CreateResponse(HttpStatusCode.OK, ret);
-            }
+            string resultMassage = "";
+            if (_mastermindAppService.IsFinished(guess.GameKey))
+                resultMassage = "Games has expired. Please, start over!";
             else
             {
-                var ret = new
+                resultMassage = "You win!";
+                var currentGame = _mastermindAppService.TryGuessCode(guess);
+
+                if (currentGame.IsSolved())
                 {
-                    currentGame.CodeLength,
-                    currentGame.Colors,
-                    currentGame.Gamekey,
-                    currentGame.Guess,
-                    currentGame.NumGuesses,
-                    currentGame.PastResults,
-                    currentGame.Result,
-                    currentGame.Solved
-                };
-
-                response = Request.CreateResponse(HttpStatusCode.OK, ret);
+                    var ret = new
+                    {
+                        currentGame.CodeLength,
+                        FurtherInstructions = "Solve the challenge to see this!",
+                        currentGame.Colors,
+                        currentGame.Gamekey,
+                        currentGame.Guess,
+                        currentGame.NumGuesses,
+                        currentGame.PastResults,
+                        Result = resultMassage,
+                        currentGame.Solved,
+                        TimeTaken = currentGame.TimeTaken(),
+                        currentGame.Players.First().User
+                    };
+                    response = Request.CreateResponse(HttpStatusCode.OK, ret);
+                }
+                else
+                {
+                    var ret = new
+                    {
+                        currentGame.CodeLength,
+                        currentGame.Colors,
+                        currentGame.Gamekey,
+                        currentGame.Guess,
+                        currentGame.NumGuesses,
+                        currentGame.PastResults,
+                        currentGame.Result,
+                        currentGame.Solved
+                    };
+                    response = Request.CreateResponse(HttpStatusCode.OK, ret);
+                }
             }
-
-
 
             return await Task<HttpResponseMessage>.Factory.StartNew(() =>
             {
-
                 return response;
             });
         }

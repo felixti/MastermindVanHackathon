@@ -18,7 +18,7 @@ namespace MastermindVanHackathon.Data
             _connection = Connection;
             _gameCollection = _connection.Db.GetCollection<Game>(_nameCollection);
         }
-        public void CreateCollection()
+        private void CreateCollection()
         {
             _connection.Db.CreateCollection(_nameCollection);
         }
@@ -33,7 +33,7 @@ namespace MastermindVanHackathon.Data
             throw new NotImplementedException();
         }
 
-        public bool HasCollection()
+        private bool HasCollection()
         {
             var isCreated =_gameCollection.Count(_ => true) >= 0;
 
@@ -53,6 +53,13 @@ namespace MastermindVanHackathon.Data
 
             _gameCollection.ReplaceOne(c => c._id == originalGame._id, game);
 
+        }
+        public void SetupDatabase()
+        {
+            if (!this.HasCollection())
+            {
+                this.CreateCollection();
+            }
         }
     }
 }

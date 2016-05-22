@@ -10,12 +10,10 @@ namespace MastermindVanHackathon.Data
 {
     public interface IMastermindRepository
     {
-        void CreateCollection();
         void Insert(Game game);
         void Replace(Game game);
         IMongoCollection<Game> GetGameColletction();
         Game GetGamebyGamekey(string gameKey);
-        bool HasCollection();
-
+        void SetupDatabase();
     }
 }

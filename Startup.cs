@@ -1,5 +1,4 @@
-﻿using MastermindVanHackathon.Configuration;
-using MastermindVanHackathon.Controllers;
+﻿using MastermindVanHackathon.AppServices;
 using MastermindVanHackathon.CrossCutting;
 using MastermindVanHackathon.Data;
 using MastermindVanHackathon.Models;
@@ -84,6 +83,7 @@ namespace MastermindVanHackathon
             container.Register<IMastermindMatch, MastermindMatch>(Lifestyle.Scoped);
             container.Register<MongoConnection>(Lifestyle.Scoped);
             container.RegisterWebApiRequest<IMastermindRepository, MastermindRepository>();
+            container.RegisterWebApiRequest<IMastermindAppService, MastermindAppService>();
             container.RegisterWebApiRequest<Game>();
             container.RegisterWebApiControllers(config);
 

@@ -38,7 +38,8 @@ namespace MastermindVanHackathon.Models
         public string Code { get; protected set; }
         public IList<Player> Players { get; private set; }
         public DateTime CreatedAt { get; private set; }
-        public DateTime UpdatedAt { get; private set; }
+        public DateTime? UpdatedAt { get; private set; }
+
         public bool IsSolved()
         {
             return Solved;
@@ -90,6 +91,18 @@ namespace MastermindVanHackathon.Models
         {
             var lastResult = this.PastResults.Last();
             this.Result = new { lastResult.Exact, lastResult.Near };
+        }
+
+        public bool Timeout()
+        {
+            var expired = this.UpdatedAt.HasValue ? this.UpdatedAt.Value.Subtract(this.CreatedAt).Seconds > 3000 : false;
+
+            return expired;
+        }
+
+        public int TimeTaken()
+        {
+            return this.UpdatedAt.Value.Subtract(this.CreatedAt).Seconds;
         }
     }
 }

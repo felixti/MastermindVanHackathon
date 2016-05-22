@@ -42,8 +42,8 @@ namespace MastermindVanHackathon.Controllers
             HttpResponseMessage response = null;
 
             string resultMassage = "";
-            if (_mastermindAppService.IsFinished(guess.GameKey))
-                resultMassage = "Games has expired. Please, start over!";
+            if (_mastermindAppService.IsFinished(guess.GameKey, out resultMassage))
+                return Request.CreateResponse(HttpStatusCode.OK, new { message = resultMassage });
             else
             {
                 resultMassage = "You win!";

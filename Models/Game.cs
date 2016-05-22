@@ -93,7 +93,7 @@ namespace MastermindVanHackathon.Models
 
         public bool Timeout()
         {
-            var expired = this.UpdatedAt.HasValue ? this.UpdatedAt.Value.Subtract(this.CreatedAt).Seconds > 3000 : false;
+            var expired = this.UpdatedAt.HasValue ? DateTime.Now.Subtract(this.CreatedAt).Seconds > 300 : false;
 
             return expired;
         }
@@ -101,6 +101,11 @@ namespace MastermindVanHackathon.Models
         public int TimeTaken()
         {
             return this.UpdatedAt.Value.Subtract(this.CreatedAt).Seconds;
+        }
+
+        public bool TryLimitExpired()
+        {
+            return this.NumGuesses == 12;
         }
     }
 }

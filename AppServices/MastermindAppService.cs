@@ -15,11 +15,19 @@ namespace MastermindVanHackathon.AppServices
             _mastermindRepository.SetupDatabase();
         }
 
-        public bool IsFinished(string gamekey)
+        public bool IsFinished(string gamekey, out string resultMessage)
         {
+            resultMessage = "";
             var currentGame = _mastermindRepository.GetGamebyGamekey(gamekey);
 
-            return currentGame.IsSolved() || currentGame.Timeout();
+            if (currentGame.IsSolved())
+                resultMessage = "Game is solved. Congratulations!";
+            if (currentGame.Timeout())
+                resultMessage = "Games has expired. Please, start over!";
+            if (currentGame.TryLimitExpired())
+                resultMessage = "You already reached the limit of tries. Please, start over!";
+
+            return currentGame.IsSolved() || currentGame.Timeout() || currentGame.TryLimitExpired();
         }
 
         public Game StartGame(Player player)

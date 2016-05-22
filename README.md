@@ -302,6 +302,16 @@ The response will be:
   }
 }
 ```
+# Mastermind Front End
+
+If you want to see a nostalgic and themed front-end using axiom-zen API, just go to:
+
+```
+http://<server-name>/index.html
+```
+
+## ENJOY!!!##
+
 That's all folks.
 
 Thanks.

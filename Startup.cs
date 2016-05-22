@@ -1,4 +1,5 @@
-﻿using MastermindVanHackathon.Controllers;
+﻿using MastermindVanHackathon.Configuration;
+using MastermindVanHackathon.Controllers;
 using MastermindVanHackathon.CrossCutting;
 using MastermindVanHackathon.Data;
 using MastermindVanHackathon.Models;
@@ -51,6 +52,7 @@ namespace MastermindVanHackathon
             config.Formatters.Remove(config.Formatters.XmlFormatter);
             config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            //config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new PascalCaseToUnderscoreContractResolver();
 
             config.MapHttpAttributeRoutes();
             config.EnsureInitialized();

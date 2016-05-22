@@ -67,6 +67,11 @@ namespace MastermindVanHackathon.Models
             Code = MastermindRandomize.RandomGuess(this.Colors);
         }
 
+        public void SetTry()
+        {
+            this.NumGuesses++;
+        }
+
         public void SetupNewGame()
         {
             this.Gamekey = TokenGenerator.GenerateToken();

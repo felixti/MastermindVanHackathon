@@ -1,4 +1,5 @@
-﻿using MastermindVanHackathon.Data;
+﻿using MastermindVanHackathon.Configuration;
+using MastermindVanHackathon.Data;
 using MastermindVanHackathon.Models;
 using Newtonsoft.Json;
 using System;
@@ -46,6 +47,7 @@ namespace MastermindVanHackathon.Controllers
 
             return await Task<HttpResponseMessage>.Factory.StartNew(() =>
             {
+
                 return Request.CreateResponse(HttpStatusCode.OK, values);
             });
         }
@@ -56,11 +58,14 @@ namespace MastermindVanHackathon.Controllers
 
             var currentGame = _mastermindRepository.GetGamebyGamekey(guess.GameKey);
 
+            currentGame.SetTry();
             currentGame.SetGuess(guess.Code);
             currentGame.MatchCode();
             currentGame.SetResult();
 
             _mastermindRepository.Replace(currentGame);
+
+
 
             if (currentGame.IsSolved())
             {
@@ -102,6 +107,7 @@ namespace MastermindVanHackathon.Controllers
 
             return await Task<HttpResponseMessage>.Factory.StartNew(() =>
             {
+
                 return response;
             });
         }

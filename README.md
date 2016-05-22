@@ -219,6 +219,7 @@ Sending now the gamekey, that you already have kept in older posts.
   gamekey:"hwrmzL9GEkeJghErMCW3zA==", 
   code:"YCPORMGB"
 }
+```
 
 The response will be:
 
@@ -256,3 +257,51 @@ The response will be:
   }
 }
 ```
+
+**When you solve the code:**
+
+```javascript
+{
+  "result":{
+  "codeLength": 8,
+  "furtherInstructions": "Solve the challenge to see this!",
+  "colors": [
+    "R",
+    "B",
+    "G",
+    "Y",
+    "O",
+    "P",
+    "C",
+    "M"
+  ],
+  "gamekey": "y32slt4e5E6nW28f6hLbuw==",
+  "guess": "GRGMMGCO",
+  "numGuesses": 3,
+  "pastResults": [
+    {
+      "exact": 0,
+      "guess": "OPORCCGB",
+      "near": 4
+    },
+    {
+      "exact": 0,
+      "guess": "OPORCCGB",
+      "near": 4
+    },
+    {
+      "exact": 8,
+      "guess": "GRGMMGCO",
+      "near": 0
+    }
+  ],
+  "result": "You win!",
+  "solved": true,
+  "timeTaken": 54,
+  "user": "UserName"
+  }
+}
+```
+That's all folks.
+
+Thanks.

@@ -144,6 +144,9 @@ Congratulations you win.
 ## Multiplayer Mode
 
 In this mode will be necessary to send some new data to start the game, example below:
+
+
+
 ```
 http://<server-name>/api/mastermindmultiplayer/join
 ```
@@ -154,7 +157,9 @@ http://<server-name>/api/mastermindmultiplayer/join
   roomId:""
 }
 ```
-You'll receive a response with the gamekey, roomid and message. The message says you need wait for second player.
+- **role** you just can chose for two roles, these are **CodeMaker** or **CokeBreaker**
+
+You'll receive a response with the gamekey, room id and message. The message says you need wait for second player.
 
 ```javascript
 {
@@ -163,3 +168,7 @@ You'll receive a response with the gamekey, roomid and message. The message says
   "message": "You are joined. Waiting for the second player!"
 }
 ```
+
+
+
+

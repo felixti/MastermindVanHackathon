@@ -22,20 +22,18 @@ namespace MastermindVanHackathon.Models
             Colors = new string[] { "R", "B", "G", "Y", "O", "P", "C", "M" };
             CodeLength = Colors.Length;
             Gamekey = "";
-            PastResults = new List<PastResult>();
-            Players = new List<Player>();
             _matermindMatch = _matermindMatch == null ? new MastermindMatch() : _matermindMatch;
         }
 
         public string[] Colors { get; private set; }
         public int CodeLength { get; protected set; }
         public String Gamekey { get; protected set; }
-        public int NumGuesses { get; protected set; }
-        public IList<PastResult> PastResults { get; protected set; }
+
         public bool Solved { get; protected set; }
-        public string Guess { get; protected set; }
+
         public string Code { get; protected set; }
-        public IList<Player> Players { get; private set; }
+        public Player Player1 { get; protected set; }
+        public Player Player2 { get; protected set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; private set; }
 
@@ -44,21 +42,29 @@ namespace MastermindVanHackathon.Models
             return Solved;
         }
 
-        public void MatchCode()
+        public void MatchCode(Player currentPlayer)
         {
-            var match = _matermindMatch.MatchGuessWithCode(this.Code, this.Guess);
+            var match = _matermindMatch.MatchGuessWithCode(this.Code, currentPlayer.Guess);
             this.Solved = match["match"] == 1;
-            AddPastResult(match["exact"], match["near"]);
+            currentPlayer.AddPastResult(match["exact"], match["near"]);
         }
 
-        private void AddPastResult(int exact, int near)
+        public void SetPlayer1(Player player)
         {
-            this.PastResults.Add(new PastResult(Guess, exact, near));
+            if (string.IsNullOrEmpty(player.Gamekey))
+            {
+                this.Player1 = player;
+                this.Player1.SetGamekey(this.Gamekey);
+            }
         }
 
-        public void AddPlayer(Player player)
+        public void SetPlayer2(Player player)
         {
-            this.Players.Add(player);
+            if (string.IsNullOrEmpty(player.Gamekey))
+            {
+                this.Player2 = player;
+                this.Player2.SetGamekey(this.Gamekey);
+            }
         }
 
         public void GenerateCode()
@@ -66,10 +72,6 @@ namespace MastermindVanHackathon.Models
             Code = MastermindRandomize.RandomGuess(this.Colors);
         }
 
-        public void SetTry()
-        {
-            this.NumGuesses++;
-        }
 
         public void SetupNewGame()
         {
@@ -79,21 +81,18 @@ namespace MastermindVanHackathon.Models
 
         public dynamic Result { get; private set; }
 
-        public void SetGuess(string guess)
-        {
-            this.Guess = guess;
-            this.UpdatedAt = DateTime.Now;
-        }
 
-        public void SetResult()
+
+        public void SetResult(Player player)
         {
-            var lastResult = this.PastResults.Last();
+            var lastResult = player.PastResults.Last();
+            this.UpdatedAt = DateTime.Now;
             this.Result = new { lastResult.Exact, lastResult.Near };
         }
 
         public bool Timeout()
         {
-            var expired = this.UpdatedAt.HasValue ? DateTime.Now.Subtract(this.CreatedAt).Seconds > 300 : false;
+            var expired =  DateTime.Now.Subtract(this.CreatedAt).Seconds > 300;
 
             return expired;
         }
@@ -103,9 +102,6 @@ namespace MastermindVanHackathon.Models
             return this.UpdatedAt.Value.Subtract(this.CreatedAt).Seconds;
         }
 
-        public bool TryLimitExpired()
-        {
-            return this.NumGuesses == 12;
-        }
+        
     }
 }

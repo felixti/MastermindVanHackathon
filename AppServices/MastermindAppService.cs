@@ -24,16 +24,16 @@ namespace MastermindVanHackathon.AppServices
                 resultMessage = "Game is solved. Congratulations!";
             if (currentGame.Timeout())
                 resultMessage = "Games has expired. Please, start over!";
-            if (currentGame.TryLimitExpired())
+            if (currentGame.Player1.TryLimitExpired())
                 resultMessage = "You already reached the limit of tries. Please, start over!";
 
-            return currentGame.IsSolved() || currentGame.Timeout() || currentGame.TryLimitExpired();
+            return currentGame.IsSolved() || currentGame.Timeout() || currentGame.Player1.TryLimitExpired();
         }
 
         public Game StartGame(Player player)
         {
             _game.SetupNewGame();
-            _game.AddPlayer(player);
+            _game.SetPlayer1(player);
             _game.GenerateCode();
             _mastermindRepository.Insert(_game);
 
@@ -44,10 +44,9 @@ namespace MastermindVanHackathon.AppServices
         {
             var currentGame = _mastermindRepository.GetGamebyGamekey(guess.GameKey);
 
-            currentGame.SetTry();
-            currentGame.SetGuess(guess.Code);
-            currentGame.MatchCode();
-            currentGame.SetResult();
+            currentGame.Player1.SetGuess(guess.Code);
+            currentGame.MatchCode(currentGame.Player1);
+            currentGame.SetResult(currentGame.Player1);
             _mastermindRepository.Replace(currentGame);
 
             return currentGame;

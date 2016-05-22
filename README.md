@@ -20,7 +20,7 @@ http://<server-name>/api/mastermind/newgame
 }
 ```
 
-You'll receive another json like that:
+You'll receive a response like that:
 
 ```javascript
 {
@@ -41,3 +41,23 @@ You'll receive another json like that:
   "solved": false
 }
 ```
+-- **colors** The colors that you can chose to set the guess code.
+-- **codeLength** The exact length you have to create the guess code.
+-- **gamekey** The game identifier.
+-- **numGuesses** The number that you tried guess the code.
+-- **pastResults** All results of your guesses.
+-- **solved** Game's solved.
+
+The next step is send your guess for:
+```
+http://<server-name>/api/mastermind/guess
+```
+using:
+```javascript
+{
+  "code": "GUESSCODE",
+  "gamekey": "E6aFPF0t5EmVGcwnumjcPw=="
+}
+```
+
+

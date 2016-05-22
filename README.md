@@ -189,7 +189,7 @@ After sent the post data will receive this response:
 }
 ```
 
-Now the second player needs to send the secret code for:
+Now the second player needs to send the secret code to:
 ```
 http://<server-name>/api/mastermindmultiplayer/setsecretcode
 ```
@@ -201,3 +201,21 @@ http://<server-name>/api/mastermindmultiplayer/setsecretcode
 }
 ```
 
+The response:
+```javascript
+{
+  "isReady": true,
+  "message": "Secret code is set. Good luck for Code Breker, Enjoy!"
+}
+```
+
+So, now you "Code Breaker" are ready to start the guesses sending to...:
+```
+http://<server-name>/api/mastermindmultiplayer/tryguesscode
+```
+Sending now the gamekey, that you already have kept in older posts.
+```javascript
+{
+  gamekey:"hwrmzL9GEkeJghErMCW3zA==", 
+  code:"YCPORMGB"
+}

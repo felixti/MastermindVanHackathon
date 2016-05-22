@@ -36,14 +36,6 @@
       <HintPath>..\packages\Humanizer.Core.2.0.1\lib\dotnet\Humanizer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
       <Private>True</Private>
@@ -144,11 +136,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppServices\IMastermindAppService.cs" />
+    <Compile Include="AppServices\IMastermindMultiplayerAppService.cs" />
     <Compile Include="AppServices\MastermindAppService.cs" />
+    <Compile Include="AppServices\MastermindMultiplayerAppService.cs" />
     <Compile Include="AuthAuthorizationServerProvider.cs" />
     <Compile Include="Configuration\ObjectIdConverter.cs" />
     <Compile Include="Configuration\PascalCaseToUnderscoreContractResolver.cs" />
     <Compile Include="Controllers\MastermindController.cs" />
+    <Compile Include="Controllers\MastermindMultiplayerController.cs" />
     <Compile Include="CrossCutting\IMastermindMatch.cs" />
     <Compile Include="CrossCutting\MastermindMatch.cs" />
     <Compile Include="CrossCutting\MastermindRandomize.cs" />
@@ -156,11 +151,15 @@
     <Compile Include="Data\IMastermindRepository.cs" />
     <Compile Include="Data\MastermindRepository.cs" />
     <Compile Include="Data\MongoConnection.cs" />
-    <Compile Include="Hubs\MastermindHub.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\Guess.cs" />
+    <Compile Include="Models\JoinViewModel.cs" />
+    <Compile Include="Models\MultiplayerGame.cs" />
     <Compile Include="Models\PastResult.cs" />
     <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\Roles.cs" />
+    <Compile Include="Models\Room.cs" />
+    <Compile Include="Models\SecretCodeViewModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RootPathProvider.cs" />
@@ -172,13 +171,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Scripts\jquery-1.6.4-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.6.4.js" />
-    <Content Include="Scripts\jquery-1.6.4.min.js" />
-    <Content Include="Scripts\jquery.signalR-2.2.0.js" />
-    <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

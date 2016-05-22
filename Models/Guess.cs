@@ -4,8 +4,8 @@
     {
         public Guess(string code, string gameKey)
         {
-            this.Code = code;
-            this.GameKey = gameKey;
+            Code = code;
+            GameKey = gameKey;
         }
 
         public string Code { get; protected set; }

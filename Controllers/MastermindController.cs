@@ -26,8 +26,8 @@ namespace MastermindVanHackathon.Controllers
                 newGame.Colors,
                 newGame.CodeLength,
                 newGame.Gamekey,
-                newGame.Player1.NumGuesses,
-                newGame.Player1.PastResults,
+                newGame.CodeBreaker.NumGuesses,
+                newGame.CodeBreaker.PastResults,
                 newGame.Solved
             };
 
@@ -57,13 +57,13 @@ namespace MastermindVanHackathon.Controllers
                         FurtherInstructions = "Solve the challenge to see this!",
                         currentGame.Colors,
                         currentGame.Gamekey,
-                        currentGame.Player1.Guess,
-                        currentGame.Player1.NumGuesses,
-                        currentGame.Player1.PastResults,
+                        currentGame.CodeBreaker.Guess,
+                        currentGame.CodeBreaker.NumGuesses,
+                        currentGame.CodeBreaker.PastResults,
                         Result = resultMassage,
                         currentGame.Solved,
                         TimeTaken = currentGame.TimeTaken(),
-                        currentGame.Player1.User
+                        currentGame.CodeBreaker.User
                     };
                     response = Request.CreateResponse(HttpStatusCode.OK, ret);
                 }
@@ -74,9 +74,9 @@ namespace MastermindVanHackathon.Controllers
                         currentGame.CodeLength,
                         currentGame.Colors,
                         currentGame.Gamekey,
-                        currentGame.Player1.Guess,
-                        currentGame.Player1.NumGuesses,
-                        currentGame.Player1.PastResults,
+                        currentGame.CodeBreaker.Guess,
+                        currentGame.CodeBreaker.NumGuesses,
+                        currentGame.CodeBreaker.PastResults,
                         currentGame.Result,
                         currentGame.Solved
                     };

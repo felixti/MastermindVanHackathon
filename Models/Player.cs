@@ -7,39 +7,69 @@ namespace MastermindVanHackathon.Models
     {
         public Player(string user)
         {
-            this.User = user;
+            User = user;
             PastResults = new List<PastResult>();
         }
+
+        public Player(string user, Roles role)
+        {
+            User = user;
+            PastResults = new List<PastResult>();
+            Role = role;
+        }
+
         public string Gamekey { get; protected set; }
         public string User { get; protected set; }
         public string Guess { get; protected set; }
         public int NumGuesses { get; protected set; }
         public IList<PastResult> PastResults { get; protected set; }
+        public bool IsPlaying { get; protected set; }
         public bool Solved { get; protected set; }
+        public Roles Role { get; protected set; }
 
         public void AddPastResult(int exact, int near)
         {
-            this.PastResults.Add(new PastResult(Guess, exact, near));
+            PastResults.Add(new PastResult(Guess, exact, near));
+        }
+
+        public void PlayGame()
+        {
+            IsPlaying = true;
         }
 
         public void SetGamekey(string gamekey)
         {
-            this.Gamekey = gamekey;
+            Gamekey = gamekey;
         }
 
         private void SetTry()
         {
-            this.NumGuesses++;
+            NumGuesses++;
         }
 
         public void SetGuess(string guess)
         {
-            this.Guess = guess;
+            Guess = guess;
             SetTry();
         }
         public bool TryLimitExpired()
         {
-            return this.NumGuesses == 12;
+            return NumGuesses == 12;
+        }
+
+        public bool IsCodeBreaker()
+        {
+            return Role == Roles.CodeBreaker;
+        }
+
+        public bool IsCodeMaker()
+        {
+            return Role == Roles.CodeMaker;
+        }
+
+        public void SetRole(string role)
+        {
+            Role = (Roles)Enum.Parse(typeof(Roles), role);
         }
     }
 }

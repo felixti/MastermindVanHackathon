@@ -4,9 +4,9 @@
     {
         public PastResult(string guess, int exact, int near)
         {
-            this.Guess = guess;
-            this.Exact = exact;
-            this.Near = near;
+            Guess = guess;
+            Exact = exact;
+            Near = near;
         }
 
         public int Exact { get; protected set; }

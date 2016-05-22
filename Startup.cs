@@ -24,9 +24,7 @@ namespace MastermindVanHackathon
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             var config = new HttpConfiguration();
             ConfigureRegisters(app, config);
-            app.MapSignalR();
             ConfigureWebApi(app, config);
-
             //ConfigureOAuth(app);
         }
 
@@ -80,6 +78,7 @@ namespace MastermindVanHackathon
             container.Register<MongoConnection>(Lifestyle.Scoped);
             container.RegisterWebApiRequest<IMastermindRepository, MastermindRepository>();
             container.RegisterWebApiRequest<IMastermindAppService, MastermindAppService>();
+            container.RegisterWebApiRequest<IMastermindMultiplayerAppService, MastermindMultiplayerAppService>();
             container.RegisterWebApiRequest<Game>();
             container.RegisterWebApiControllers(config);
 

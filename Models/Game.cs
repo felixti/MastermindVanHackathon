@@ -14,7 +14,7 @@ namespace MastermindVanHackathon.Models
 
         public Game(IMastermindMatch mastermindMatch) : this()
         {
-            this._matermindMatch = mastermindMatch;
+            _matermindMatch = mastermindMatch;
         }
 
         protected Game()
@@ -28,12 +28,11 @@ namespace MastermindVanHackathon.Models
         public string[] Colors { get; private set; }
         public int CodeLength { get; protected set; }
         public String Gamekey { get; protected set; }
-
+        public string Whosturn { get; protected set; }
         public bool Solved { get; protected set; }
-
         public string Code { get; protected set; }
-        public Player Player1 { get; protected set; }
-        public Player Player2 { get; protected set; }
+        public Player CodeBreaker { get; protected set; }
+        public Player CodeMaker { get; protected set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; private set; }
 
@@ -44,39 +43,39 @@ namespace MastermindVanHackathon.Models
 
         public void MatchCode(Player currentPlayer)
         {
-            var match = _matermindMatch.MatchGuessWithCode(this.Code, currentPlayer.Guess);
-            this.Solved = match["match"] == 1;
+            var match = _matermindMatch.MatchGuessWithCode(Code, currentPlayer.Guess);
+            Solved = match["match"] == 1;
             currentPlayer.AddPastResult(match["exact"], match["near"]);
         }
 
-        public void SetPlayer1(Player player)
+        public virtual void SetCodeBreaker(Player player)
         {
             if (string.IsNullOrEmpty(player.Gamekey))
             {
-                this.Player1 = player;
-                this.Player1.SetGamekey(this.Gamekey);
+                CodeBreaker = player;
+                CodeBreaker.SetGamekey(Gamekey);
             }
         }
 
-        public void SetPlayer2(Player player)
+        public virtual void SetCodeMaker(Player player)
         {
             if (string.IsNullOrEmpty(player.Gamekey))
             {
-                this.Player2 = player;
-                this.Player2.SetGamekey(this.Gamekey);
+                CodeMaker = player;
+                CodeMaker.SetGamekey(Gamekey);
             }
         }
 
         public void GenerateCode()
         {
-            Code = MastermindRandomize.RandomGuess(this.Colors);
+            Code = MastermindRandomize.RandomGuess(Colors);
         }
 
 
         public void SetupNewGame()
         {
-            this.Gamekey = TokenGenerator.GenerateToken();
-            this.CreatedAt = DateTime.Now;
+            Gamekey = TokenGenerator.GenerateToken();
+            CreatedAt = DateTime.Now;
         }
 
         public dynamic Result { get; private set; }
@@ -86,22 +85,25 @@ namespace MastermindVanHackathon.Models
         public void SetResult(Player player)
         {
             var lastResult = player.PastResults.Last();
-            this.UpdatedAt = DateTime.Now;
-            this.Result = new { lastResult.Exact, lastResult.Near };
+            UpdatedAt = DateTime.Now;
+            Result = new { lastResult.Exact, lastResult.Near };
         }
 
         public bool Timeout()
         {
-            var expired =  DateTime.Now.Subtract(this.CreatedAt).Seconds > 300;
+            var expired =  DateTime.Now.Subtract(CreatedAt).Seconds > 300;
 
             return expired;
         }
 
         public int TimeTaken()
         {
-            return this.UpdatedAt.Value.Subtract(this.CreatedAt).Seconds;
+            return UpdatedAt.Value.Subtract(CreatedAt).Seconds;
         }
 
-        
+        public void SetWhosturn(string userName)
+        {
+            Whosturn = userName;
+        }
     }
 }

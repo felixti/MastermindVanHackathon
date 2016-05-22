@@ -143,16 +143,14 @@ Congratulations you win.
 
 ## Multiplayer Mode
 
+**First Player**
 In this mode will be necessary to send some new data to start the game, example below:
-
-
-
 ```
 http://<server-name>/api/mastermindmultiplayer/join
 ```
 ```javascript
 {
-  name:"Felipe Felix", 
+  name:"UserName", 
   role:"CodeBreaker", 
   roomId:""
 }
@@ -169,6 +167,37 @@ You'll receive a response with the gamekey, room id and message. The message say
 }
 ```
 
+**Second Player**
+Necessary to send the name, role and room id of the room selected. In case you've sent the same role for room that already
+has a player with the same role, a new room will be created.
+```
+http://<server-name>/api/mastermindmultiplayer/join
+```
+```javascript
+{
+  name:"UserName", 
+  role:"CodeMaker", 
+  roomId:"e4938012-1478-480d-b53f-e2eea8134164"
+}
+```
+After sent the post data will receive this response:
+```javascript
+{
+  "gamekey": "RAbh2lk1okKmfSrbSpcXCA==",
+  "roomdId": "4778f056-ec16-429e-9149-5ecab914b93d",
+  "message": "You are joined. Waiting for the second player!"
+}
+```
 
-
+Now the second player needs to send the secret code for:
+```
+http://<server-name>/api/mastermindmultiplayer/setsecretcode
+```
+```javascript
+{
+  username:"UserName", 
+  roomId: "28e7ea1e-a6d2-4a88-970a-9bba0a5d9aad", 
+  code:"MMMMMMMM"
+}
+```
 

@@ -55,7 +55,7 @@ namespace MastermindVanHackathon.AppServices
             multiplayerGame.SetCodeSecret(code);
             _mastermindRepository.Replace(multiplayerGame);
 
-            return new { Message = "Secret code is set. Good luck for Code Breker, Enjoy!" };
+            return new { IsFinished = true, Message = "Secret code is set. Good luck for Code Breker, Enjoy!" };
         }
 
         public dynamic Guess(string gamekey, string guessCode)

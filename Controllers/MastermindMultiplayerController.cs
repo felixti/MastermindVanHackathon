@@ -39,7 +39,7 @@ namespace MastermindVanHackathon.Controllers
 
             return await Task<HttpResponseMessage>.Factory.StartNew(() =>
             {
-                return Request.CreateResponse(HttpStatusCode.OK, new { Message = result.Message });
+                return Request.CreateResponse(HttpStatusCode.OK, new { IsReady = true, Message = result.Message });
             });
         }
 

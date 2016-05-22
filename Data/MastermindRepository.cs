@@ -34,7 +34,13 @@ namespace MastermindVanHackathon.Data
 
         private bool HasCollection()
         {
-            var isCreated = _gameCollection.Count(_ => true) >= 0;
+            var isCreated = false;
+            try
+            {
+                isCreated = _gameCollection.Count(_ => true) >= 0;
+            }
+            catch { }
+            
 
             return isCreated;
         }

@@ -11,7 +11,7 @@ namespace MastermindVanHackathon.Data
         public MongoConnection()
         {
             MongoClient client = new MongoClient(_connectionString);
-            Db = client.GetDatabase("MastermindVanHackathonDb");
+            Db = client.GetDatabase("mastermindvanhackathon");
         }
     }
 }

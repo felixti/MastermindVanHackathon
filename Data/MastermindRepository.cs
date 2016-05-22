@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MastermindVanHackathon.Models;
+﻿using MastermindVanHackathon.Models;
 using MongoDB.Driver;
+using System;
+using System.Linq;
 
 namespace MastermindVanHackathon.Data
 {
@@ -13,11 +10,13 @@ namespace MastermindVanHackathon.Data
         private readonly MongoConnection _connection;
         private readonly string _nameCollection = "Games";
         private readonly IMongoCollection<Game> _gameCollection;
+
         public MastermindRepository(MongoConnection Connection)
         {
             _connection = Connection;
             _gameCollection = _connection.Db.GetCollection<Game>(_nameCollection);
         }
+
         private void CreateCollection()
         {
             _connection.Db.CreateCollection(_nameCollection);
@@ -35,7 +34,7 @@ namespace MastermindVanHackathon.Data
 
         private bool HasCollection()
         {
-            var isCreated =_gameCollection.Count(_ => true) >= 0;
+            var isCreated = _gameCollection.Count(_ => true) >= 0;
 
             return isCreated;
         }
@@ -47,13 +46,12 @@ namespace MastermindVanHackathon.Data
 
         public void Replace(Game game)
         {
-
             var originalGame = _gameCollection.Find(g => g._id == game._id)
                                .ToList().First();
 
             _gameCollection.ReplaceOne(c => c._id == originalGame._id, game);
-
         }
+
         public void SetupDatabase()
         {
             if (!this.HasCollection())

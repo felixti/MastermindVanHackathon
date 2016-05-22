@@ -20,7 +20,6 @@ namespace MastermindVanHackathon
     {
         public void Configuration(IAppBuilder app)
         {
-            
             ConfigureStaticFiles(app);
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             var config = new HttpConfiguration();
@@ -46,8 +45,6 @@ namespace MastermindVanHackathon
 
         private void ConfigureWebApi(IAppBuilder app, HttpConfiguration config)
         {
-            
-
             config.Formatters.Remove(config.Formatters.XmlFormatter);
             config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -60,8 +57,6 @@ namespace MastermindVanHackathon
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
                 );
-
-
 
             app.UseWebApi(config);
         }

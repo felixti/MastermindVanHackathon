@@ -1,15 +1,8 @@
-﻿using MastermindVanHackathon.Models;
-using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
+﻿using MongoDB.Driver;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MastermindVanHackathon.Data
 {
-    
     public class MongoConnection
     {
         private readonly string _connectionString = ConfigurationManager.AppSettings["mongo_url"].ToString();

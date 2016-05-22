@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
-using Microsoft.Owin.Security.OAuth;
-using System.Security.Claims;
+﻿using Microsoft.Owin.Security.OAuth;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace MastermindVanHackathon
 {

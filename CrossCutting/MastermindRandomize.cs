@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MastermindVanHackathon.CrossCutting
 {
@@ -14,9 +11,9 @@ namespace MastermindVanHackathon.CrossCutting
         {
             _random = new Random();
         }
+
         public static string RandomGuess(string[] colors)
         {
-
             List<char> result = new List<char>();
 
             for (int i = 0; i < colors.Length; i++)

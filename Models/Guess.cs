@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MastermindVanHackathon.Models
+﻿namespace MastermindVanHackathon.Models
 {
     public class Guess
     {
@@ -16,6 +10,5 @@ namespace MastermindVanHackathon.Models
 
         public string Code { get; protected set; }
         public string GameKey { get; protected set; }
-
     }
 }

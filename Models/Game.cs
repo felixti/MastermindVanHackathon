@@ -3,8 +3,6 @@ using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MastermindVanHackathon.Models
 {
@@ -14,10 +12,11 @@ namespace MastermindVanHackathon.Models
 
         private readonly IMastermindMatch _matermindMatch;
 
-        public Game(IMastermindMatch mastermindMatch):this()
+        public Game(IMastermindMatch mastermindMatch) : this()
         {
             this._matermindMatch = mastermindMatch;
         }
+
         protected Game()
         {
             Colors = new string[] { "R", "B", "G", "Y", "O", "P", "C", "M" };
@@ -50,7 +49,6 @@ namespace MastermindVanHackathon.Models
             var match = _matermindMatch.MatchGuessWithCode(this.Code, this.Guess);
             this.Solved = match["match"] == 1;
             AddPastResult(match["exact"], match["near"]);
-
         }
 
         private void AddPastResult(int exact, int near)

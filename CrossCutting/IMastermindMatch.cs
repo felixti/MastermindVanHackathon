@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace MastermindVanHackathon.CrossCutting
 {
     public interface IMastermindMatch
     {
         IDictionary<string, int> MatchGuessWithCode(string code, string guess);
-
     }
 }

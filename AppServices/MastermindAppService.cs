@@ -1,10 +1,5 @@
 ﻿using MastermindVanHackathon.Data;
 using MastermindVanHackathon.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MastermindVanHackathon.AppServices
 {
@@ -12,6 +7,7 @@ namespace MastermindVanHackathon.AppServices
     {
         private readonly Game _game;
         private readonly IMastermindRepository _mastermindRepository;
+
         public MastermindAppService(IMastermindRepository mastermindRepository, Game game)
         {
             _game = game;

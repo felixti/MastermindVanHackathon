@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json.Serialization;
-using Humanizer;
+﻿using Humanizer;
+using Newtonsoft.Json.Serialization;
 
 namespace MastermindVanHackathon.Configuration
 {

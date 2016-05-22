@@ -219,3 +219,40 @@ Sending now the gamekey, that you already have kept in older posts.
   gamekey:"hwrmzL9GEkeJghErMCW3zA==", 
   code:"YCPORMGB"
 }
+
+The response will be:
+
+**When you dont solved the code:**
+
+```javascript
+{
+ "result":{
+  "codeLength": 8,
+  "colors": [
+    "R",
+    "B",
+    "G",
+    "Y",
+    "O",
+    "P",
+    "C",
+    "M"
+  ],
+  "gamekey": "E6aFPF0t5EmVGcwnumjcPw==",
+  "guess": "OPORCCGB",
+  "numGuesses": 1,
+  "pastResults": [
+    {
+      "exact": 0,
+      "guess": "OPORCCGB",
+      "near": 4
+    }
+  ],
+  "result": {
+    "exact": 0,
+    "near": 4
+  },
+  "solved": false
+  }
+}
+```

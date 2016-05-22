@@ -157,6 +157,7 @@
     <Compile Include="Models\MultiplayerGame.cs" />
     <Compile Include="Models\PastResult.cs" />
     <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\PlayerViewModel.cs" />
     <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\Room.cs" />
     <Compile Include="Models\SecretCodeViewModel.cs" />

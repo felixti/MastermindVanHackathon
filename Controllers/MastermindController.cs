@@ -17,9 +17,10 @@ namespace MastermindVanHackathon.Controllers
             _mastermindAppService = mastermindAppService;
         }
 
-        public async Task<HttpResponseMessage> NewGame([FromBody]Player player)
+        public async Task<HttpResponseMessage> NewGame([FromBody]PlayerViewModel player)
         {
-            var newGame = _mastermindAppService.StartGame(player);
+            Player newPlayer = new Player(player.User);
+            var newGame = _mastermindAppService.StartGame(newPlayer);
 
             var values = new
             {

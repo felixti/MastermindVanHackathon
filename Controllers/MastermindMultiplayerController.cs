@@ -27,7 +27,7 @@ namespace MastermindVanHackathon.Controllers
 
             return await Task<HttpResponseMessage>.Factory.StartNew(() =>
             {
-                return Request.CreateResponse(HttpStatusCode.OK, new { RoomdId = result.RoomId, Message = result.Message });
+                return Request.CreateResponse(HttpStatusCode.OK, new { Gamekey = result.Gamekey, RoomdId = result.RoomId, Message = result.Message });
             });
         }
 
@@ -40,6 +40,16 @@ namespace MastermindVanHackathon.Controllers
             return await Task<HttpResponseMessage>.Factory.StartNew(() =>
             {
                 return Request.CreateResponse(HttpStatusCode.OK, new { Message = result.Message });
+            });
+        }
+
+        public async Task<HttpResponseMessage> TryGuessCode([FromBody] Guess guess)
+        {
+            dynamic result = _mastermindMultiplayerAppService.Guess(guess.GameKey, guess.Code);
+
+            return await Task<HttpResponseMessage>.Factory.StartNew(() =>
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { result });
             });
         }
     }

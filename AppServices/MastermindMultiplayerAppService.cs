@@ -16,11 +16,6 @@ namespace MastermindVanHackathon.AppServices
             _mastermindRepository = mastermindRepository;
         }
 
-        public dynamic Guess(string guess)
-        {
-            throw new NotImplementedException();
-        }
-
         public dynamic Join(Player player, string roomId)
         {
             dynamic ret;
@@ -35,7 +30,7 @@ namespace MastermindVanHackathon.AppServices
                     multiplayerGame.SetPlayer(player);
                     _mastermindRepository.Insert(multiplayerGame);
 
-                    ret = new { RoomId = room.RoomId, Message = "You are joined. Waiting for the second player!" };
+                    ret = new { Gamekey = multiplayerGame.Gamekey, RoomId = room.RoomId, Message = "You are joined. Waiting for the second player!" };
                 }
                 else
                 {
@@ -43,7 +38,7 @@ namespace MastermindVanHackathon.AppServices
                     multiplayerGame.Room.SetRoomIsFull();
                     _mastermindRepository.Replace(multiplayerGame);
 
-                    ret = new { RoomId = multiplayerGame.Room.RoomId,  Message = "You are joined. Please wait for start the game." };
+                    ret = new { Gamekey = multiplayerGame.Gamekey, RoomId = multiplayerGame.Room.RoomId, Message = "You are joined. Please wait for start the game." };
                 }
             }
             catch (Exception ex)
@@ -63,9 +58,66 @@ namespace MastermindVanHackathon.AppServices
             return new { Message = "Secret code is set. Good luck for Code Breker, Enjoy!" };
         }
 
-        public dynamic StartGame(string code)
+        public dynamic Guess(string gamekey, string guessCode)
         {
-            throw new NotImplementedException();
+            dynamic ret;
+            string message = string.Empty;
+            var currentGame = _mastermindRepository.GetMultiplayerGamebyGamekey(gamekey);
+
+            if (IsFinished(currentGame, out message))
+                return new { Message = message };
+
+            currentGame.CodeBreaker.SetGuess(guessCode);
+            currentGame.MatchCode(currentGame.CodeBreaker);
+            currentGame.SetResult(currentGame.CodeBreaker);
+            _mastermindRepository.Replace(currentGame);
+
+            if (currentGame.IsSolved())
+            {
+                ret = new
+                {
+                    currentGame.CodeLength,
+                    FurtherInstructions = "Solve the challenge to see this!",
+                    currentGame.Colors,
+                    currentGame.Gamekey,
+                    currentGame.CodeBreaker.Guess,
+                    currentGame.CodeBreaker.NumGuesses,
+                    currentGame.CodeBreaker.PastResults,
+                    Result = "",
+                    currentGame.Solved,
+                    TimeTaken = currentGame.TimeTaken(),
+                    currentGame.CodeBreaker.User
+                };
+            }
+            else
+            {
+                ret = new
+                {
+                    currentGame.CodeLength,
+                    currentGame.Colors,
+                    currentGame.Gamekey,
+                    currentGame.CodeBreaker.Guess,
+                    currentGame.CodeBreaker.NumGuesses,
+                    currentGame.CodeBreaker.PastResults,
+                    currentGame.Result,
+                    currentGame.Solved
+                };
+            }
+
+            return ret;
+        }
+
+        private bool IsFinished(MultiplayerGame currentGame, out string resultMessage)
+        {
+            resultMessage = "";
+            if (currentGame.IsSolved())
+                resultMessage = "Game is solved. Congratulations!";
+            if (currentGame.Timeout())
+                resultMessage = "Games has expired. Please, start over!";
+            if (currentGame.CodeBreaker.TryLimitExpired())
+                resultMessage = "You already reached the limit of tries. Please, start over!";
+
+            return currentGame.IsSolved() || currentGame.Timeout() || currentGame.CodeBreaker.TryLimitExpired();
         }
     }
 }

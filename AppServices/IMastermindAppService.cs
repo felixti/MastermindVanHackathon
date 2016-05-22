@@ -8,6 +8,6 @@ namespace MastermindVanHackathon.AppServices
 
         Game TryGuessCode(Guess guess);
 
-        bool IsFinished(string gamekey, out string resultMassage);
+        bool IsFinished(string gamekey, out string resultMessage);
     }
 }

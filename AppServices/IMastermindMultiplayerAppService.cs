@@ -10,9 +10,7 @@ namespace MastermindVanHackathon.AppServices
     public interface IMastermindMultiplayerAppService
     {
         dynamic Join(Player player, string roomId);
-        dynamic StartGame(string code);
-        dynamic Guess(string guess);
-
-        dynamic SetSecretCode(string userName, string roomName, string code);
+        dynamic Guess(string gamekey, string guessCode);
+        dynamic SetSecretCode(string userName, string roomId, string code);
     }
 }

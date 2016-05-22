@@ -10,7 +10,7 @@ namespace MastermindVanHackathon.Models
     {
         public ObjectId _id { get; set; }
 
-        private readonly IMastermindMatch _matermindMatch;
+        private IMastermindMatch _matermindMatch;
 
         public Game(IMastermindMatch mastermindMatch) : this()
         {
@@ -43,6 +43,7 @@ namespace MastermindVanHackathon.Models
 
         public void MatchCode(Player currentPlayer)
         {
+            _matermindMatch = _matermindMatch ?? new MastermindMatch();
             var match = _matermindMatch.MatchGuessWithCode(Code, currentPlayer.Guess);
             Solved = match["match"] == 1;
             currentPlayer.AddPastResult(match["exact"], match["near"]);

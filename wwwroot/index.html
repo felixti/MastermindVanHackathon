@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<meta prefix="og: http://ogp.me/ns#" property="og:title" content="MasterMind!"/>
+		<meta prefix="og: http://ogp.me/ns#" property="og:description" content="A web game created to VanHackathon."">
+		<meta prefix="og: http://ogp.me/ns#" property="og:image" content="http://csprofile.github.io/MasterMind/img/ogImage.png" />
+		<meta prefix="og: http://ogp.me/ns#" property="og:url" content="http://csprofile.github.io/MasterMind" />
+
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+		
+		<title>{MasterMind}</title>
+
+
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/mainStyle.css" rel="stylesheet">
+		<link href="css/bgNoise.css" rel="stylesheet">
+		<link href="css/cssConsole.css" rel="stylesheet">
+		
+		<script src="js/thirdparty/jquery.min.js"></script>
+		<script src="js/thirdparty/jquery-ui.min.js"></script>
+		<script src="js/thirdparty/cssConsole.min.js"></script>
+		<script src="js/thirdparty/typed.js"></script>
+		<script src="js/thirdparty/bootstrap.min.js"></script>
+		
+		<script src="js/strings.js"></script>
+		<script src="js/homeScreen.js"></script>
+		<script src="js/game.js"></script>
+		<script src="js/onload.js"></script>
+		<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body class='noise'>
+		<div class="wrongSize noise">
+			<div class="col-md-12 valign1">
+				<div class="valign2">
+					<p><b>FAILURE</b></p>
+					<p>The system does not support lower resolutions than 1024 X 768. Please, change your resolutions and press F5</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="container" id="container">
+			<div id="gameMsgs">
+				<div class="row board">
+					<div class="col-md-12 valign1">
+						<div class="inputs valign2">
+							<div id="gameInputLabel"><p>>Type your name and press enter:</p></div>
+							<div id="gameInput" name="playerName"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

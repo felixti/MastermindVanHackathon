@@ -170,8 +170,26 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <Content Include="wwwroot\css\bgNoise.css" />
+    <Content Include="wwwroot\css\bootstrap.min.css" />
+    <Content Include="wwwroot\css\cssConsole.css" />
+    <Content Include="wwwroot\css\img\noise.png" />
+    <Content Include="wwwroot\css\img\stripe.png" />
+    <Content Include="wwwroot\css\mainStyle.css" />
+    <Content Include="wwwroot\favicon.ico" />
+    <Content Include="wwwroot\img\ogImage.png" />
+    <Content Include="wwwroot\index.html" />
+    <Content Include="wwwroot\js\game.js" />
+    <Content Include="wwwroot\js\homeScreen.js" />
+    <Content Include="wwwroot\js\onload.js" />
+    <Content Include="wwwroot\js\strings.js" />
+    <Content Include="wwwroot\js\thirdparty\bootstrap.min.js" />
+    <Content Include="wwwroot\js\thirdparty\cssConsole.min.js" />
+    <Content Include="wwwroot\js\thirdparty\jquery-ui.min.js" />
+    <Content Include="wwwroot\js\thirdparty\jquery.min.js" />
+    <Content Include="wwwroot\js\thirdparty\typed.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

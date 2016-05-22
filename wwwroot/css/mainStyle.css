@@ -1,0 +1,102 @@
+html,body{height:100%;}
+
+.container, #gameMsgs, .board {
+    height:100%;
+}
+
+.btn{
+	width:100%;
+	height:100%;
+}
+.btnPlace{
+	padding:10px;
+}
+.fill{
+    width:100%;
+    height:100%;
+    min-height:100%;
+    padding:10px;
+    color:#efefef;
+}
+
+.avaibleColors{
+	cursor:move;
+}
+
+.piecePlaceCol > div{
+	border:1px solid #00CC00;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+
+.ui-droppable{
+	background-color:#444;;
+}
+
+.ui-droppable-disabled{
+	background-color:#222;
+}
+
+.highlightEmptyPlace{
+	background-color:red;
+}
+.sideDiv{background-color:transparent}
+.boardColor{background-color:#222;}
+
+
+.color0{background-color:#ff8800}
+.color1{background-color:#8b0000}
+.color2{background-color:#004600}
+.color3{background-color:#000066}
+.color4{background-color:#BDB76B}
+.color5{background-color:#A46582}
+.color6{background-color:#ddd}
+.color7{background-color:#c0c0c0}
+
+.inGame{
+	background-color:#223332;
+}
+
+
+.valign1{
+	display:table!important;
+	height:100%;
+}
+
+.valign2{
+	display: table-cell!important;
+	vertical-align: middle;
+}
+
+.piecePlaceText{
+	text-align:center;
+	font-size:30px;
+	color:#fff;
+}
+
+.gameInput{
+	background-color:transparent;
+	border:none;
+}
+
+.answerDiv{
+	color:#00811c;
+	font-size:14px;
+}
+
+.timerPlaceText{
+	text-align:center;
+	font-size:30px;
+	color:red;
+}
+
+.wrongSize{
+	width:100%;
+	height:100%;
+	position:absolute;
+	z-index:999;
+	text-align:center;
+	display:none;
+}

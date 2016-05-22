@@ -1,0 +1,42 @@
+.noise {
+  background-color: #1d2b2a;
+  background-image: url(img/stripe.png), url(img/noise.png);
+  background-repeat: repeat-x, repeat;
+  background-position: 0 0%;
+  background-attachment: fixed;
+  -moz-animation: blink 0.1s steps(2, start) infinite, skip 7s linear infinite, flicker 0.1s steps(2, start) infinite;
+  -webkit-animation: blink 0.1s steps(2, start) infinite, skip 7s linear infinite, flicker 0.1s steps(2, start) infinite;
+  animation: blink 0.1s steps(2, start) infinite, skip 7s linear infinite, flicker 0.1s steps(2, start) infinite;
+  color:#00811c;
+}
+
+@-moz-keyframes blink {
+  to {
+    background-color: #223332;
+  }
+}
+@-webkit-keyframes blink {
+  to {
+    background-color: #223332;
+  }
+}
+@keyframes blink {
+  to {
+    background-color: #223332;
+  }
+}
+@-moz-keyframes skip {
+  to {
+    background-position: 0 100%;
+  }
+}
+@-webkit-keyframes skip {
+  to {
+    background-position: 0 100%;
+  }
+}
+@keyframes skip {
+  to {
+    background-position: 0 100%;
+  }
+}
